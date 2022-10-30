@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,17 +29,15 @@ class LoginPage extends StatelessWidget {
                   style: TextStyle(fontSize: 20),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 10),
-                  width: 200,
-                  height: 200,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                    color: Colors.white
+                  width: 250,
+                  height: 250,
+                  decoration: const BoxDecoration(color: Colors.white),
+                  child: Form(
+                    child: TextFormField(),
                   ),
-                ),
+                )
               ],
             ),
-            Column()
           ],
         ),
       ),
