@@ -1,4 +1,3 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 
