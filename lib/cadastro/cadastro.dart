@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter_one/cadastro/cadastro.dart';
+import 'package:flutter_one/login/login_page.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class CadastroPage extends StatefulWidget {
+  const CadastroPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<CadastroPage> createState() => _CadastroPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _CadastroPageState extends State<CadastroPage> {
   final _form = GlobalKey<FormState>();
 
+  final _nome = TextEditingController();
   final _email = TextEditingController();
   final _senha = TextEditingController();
   var _senhaVisivel = false;
@@ -27,7 +28,6 @@ class _LoginPageState extends State<LoginPage> {
           width: double.infinity,
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 if (!isKeyboard)
                   Image.asset(
@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
                 const Padding(
                     padding: EdgeInsets.only(bottom: 15),
                     child: Text(
-                      "Faça seu login",
+                      "Faça seu cadastro",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     )),
@@ -46,13 +46,30 @@ class _LoginPageState extends State<LoginPage> {
                   key: _form,
                   child: Container(
                     width: 250,
-                    height: 230,
+                    height: 280,
                     decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(5))),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
+                        SizedBox(
+                          width: 200,
+                          height: 40,
+                          child: TextFormField(
+                            controller: _nome,
+                            style: const TextStyle(color: Colors.black),
+                            decoration: const InputDecoration(
+                                contentPadding:
+                                    EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                hintText: "Nome",
+                                hintStyle: TextStyle(color: Colors.black),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        width: 1, color: Colors.black))),
+                            keyboardType: TextInputType.emailAddress,
+                          ),
+                        ),
                         SizedBox(
                           width: 200,
                           height: 40,
@@ -106,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                                 backgroundColor: Colors.black),
                             onPressed: () {},
                             child: const Text(
-                              "Entrar",
+                              "Cadastre-se",
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ))
                       ],
@@ -121,10 +138,10 @@ class _LoginPageState extends State<LoginPage> {
                             backgroundColor: Colors.white),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const CadastroPage()));
+                              builder: (context) => const LoginPage()));
                         },
                         child: const Text(
-                          "Cadastre-se",
+                          "Faça login",
                           style: TextStyle(
                               color: Colors.black, fontWeight: FontWeight.bold),
                         )))
