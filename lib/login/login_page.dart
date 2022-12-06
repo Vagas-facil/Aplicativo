@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_one/cadastro/cadastro.dart';
+import 'package:flutter_one/homepage/home_page.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,6 +19,28 @@ class _LoginPageState extends State<LoginPage> {
   final _email = TextEditingController();
   final _senha = TextEditingController();
   var _senhaVisivel = false;
+
+  Future<dynamic> ePostRequest(String email, String senha) async {
+    final response = await http.get(
+      Uri.parse("http://192.168.15.19/sitehtml-0.1/codigo/login.php"),
+      headers: {'Content-Type': 'application/json; charset=UTF-8'},
+    );
+
+    print(response.statusCode);
+    print(response);
+    //print(response.body);
+
+    List<dynamic> dados = jsonDecode(response.body);
+
+    for (var usuario in dados) {
+      if (email == usuario['Email'] && senha == usuario['Senha']) {
+        print("Autenticado");
+
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const HomePage()));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +83,9 @@ class _LoginPageState extends State<LoginPage> {
                           width: 200,
                           height: 40,
                           child: TextFormField(
+                            validator: (value) {
+                              if (value!.isEmpty) return "Digite novamente";
+                            },
                             controller: _email,
                             style: const TextStyle(color: Colors.black),
                             decoration: const InputDecoration(
@@ -73,6 +103,9 @@ class _LoginPageState extends State<LoginPage> {
                           width: 200,
                           height: 40,
                           child: TextFormField(
+                            validator: (value) {
+                              if (value!.isEmpty) return "Digite novamente";
+                            },
                             controller: _senha,
                             obscureText: !_senhaVisivel,
                             style: const TextStyle(color: Colors.black),
@@ -103,7 +136,13 @@ class _LoginPageState extends State<LoginPage> {
                             style: ElevatedButton.styleFrom(
                                 fixedSize: const Size(150, 40),
                                 backgroundColor: Colors.black),
-                            onPressed: () {},
+                            onPressed: () {
+                              if (_form.currentState!.validate()) {
+                                setState(() {
+                                  ePostRequest(_email.text, _senha.text);
+                                });
+                              }
+                            },
                             child: const Text(
                               "Entrar",
                               style: TextStyle(fontWeight: FontWeight.bold),

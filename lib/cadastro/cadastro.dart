@@ -154,7 +154,8 @@ class _CadastroPageState extends State<CadastroPage> {
                             onPressed: () {
                               if (_form.currentState!.validate()) {
                                 setState(() {
-                                  makePostRequest(_nome.text, _email.text, _senha.text);
+                                  makePostRequest(
+                                      _nome.text, _email.text, _senha.text);
                                 });
                                 Navigator.pop(context);
                               }
